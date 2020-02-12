@@ -1316,7 +1316,7 @@ Tagify.prototype = {
         tagData = _this10.normalizeTags(preInterpolated)[0]; //{value:preInterpolated}
       }
 
-      if (s2.length > 1 && (!enforceWhitelist || _this10.isTagWhitelisted(tagData.value)) && !(!duplicates && _this10.isTagDuplicate(tagData))) {
+      if (s2.length > 1 && (!enforceWhitelist || _this10.isTagWhitelisted(tagData.value)) && !(!duplicates && _this10.isTagDuplicate(tagData)) && tagData) {
         transformTag.call(_this10, tagData);
         tagData.__tagifyId = getUID();
         tagElm = _this10.createTagElem(tagData);
@@ -1660,6 +1660,7 @@ Tagify.prototype = {
    * @param {String} uid
    */
   removeValueById: function removeValueById(uid) {
+    if (!uid) return;
     this.value = this.value.filter(function (item) {
       return item.__tagifyId != uid;
     });
