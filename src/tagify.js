@@ -1629,7 +1629,7 @@ Tagify.prototype = {
             tagElm.parentNode.removeChild(tagElm)
 
             if( !silent ){
-                that.removeValueById(uid)
+                that.removeValueById(uid, tagIdx)
                 delete that.tagsDataById[uid]
                 that.update() // update the original input with the current value
                 that.trigger('remove', { tag:tagElm, index:tagIdx, data:that.tagsDataById[uid] })
@@ -1672,9 +1672,12 @@ Tagify.prototype = {
      * Removes an item in "this.value" by its UID
      * @param {String} uid
      */
-    removeValueById( uid ){
-        if(!uid) return;
-        this.value = this.value.filter(item => item.__tagifyId != uid)
+    removeValueById( uid, tagIdx ){
+        if(uid){
+            this.value = this.value.filter(item => item.__tagifyId != uid)
+        } else if(tagIdx) {
+            this.value.splice(tagIdx, 1)
+        }
     },
 
 

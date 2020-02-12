@@ -1615,7 +1615,7 @@ Tagify.prototype = {
       tagElm.parentNode.removeChild(tagElm);
 
       if (!silent) {
-        that.removeValueById(uid);
+        that.removeValueById(uid, tagIdx);
         delete that.tagsDataById[uid];
         that.update(); // update the original input with the current value
 
@@ -1659,11 +1659,14 @@ Tagify.prototype = {
    * Removes an item in "this.value" by its UID
    * @param {String} uid
    */
-  removeValueById: function removeValueById(uid) {
-    if (!uid) return;
-    this.value = this.value.filter(function (item) {
-      return item.__tagifyId != uid;
-    });
+  removeValueById: function removeValueById(uid, tagIdx) {
+    if (uid) {
+      this.value = this.value.filter(function (item) {
+        return item.__tagifyId != uid;
+      });
+    } else if (tagIdx) {
+      this.value.splice(tagIdx, 1);
+    }
   },
   preUpdate: function preUpdate() {
     this.DOM.scope.classList.toggle('tagify--hasMaxTags', this.value.length >= this.settings.maxTags);
