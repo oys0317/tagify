@@ -1311,7 +1311,7 @@ Tagify.prototype = {
                 tagData = this.normalizeTags(preInterpolated)[0]  //{value:preInterpolated}
             }
 
-            if( s2.length > 1   &&   (!enforceWhitelist || this.isTagWhitelisted(tagData.value))   &&   !(!duplicates  && this.isTagDuplicate(tagData)) ){
+            if( s2.length > 1   &&   (!enforceWhitelist || this.isTagWhitelisted(tagData.value))   &&   !(!duplicates  && this.isTagDuplicate(tagData))   &&  tagData){
                 transformTag.call(this, tagData)
                 tagData.__tagifyId = getUID()
                 tagElm = this.createTagElem(tagData)
@@ -1673,6 +1673,7 @@ Tagify.prototype = {
      * @param {String} uid
      */
     removeValueById( uid ){
+        if(!uid) return;
         this.value = this.value.filter(item => item.__tagifyId != uid)
     },
 
